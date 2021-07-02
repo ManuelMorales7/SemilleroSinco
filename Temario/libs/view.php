@@ -10,6 +10,10 @@ class View{
         require 'views/' . $nombre . '.php';
     }
 
+    
+    
+
+
 }
 
 ?>

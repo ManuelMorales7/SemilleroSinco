@@ -6,6 +6,8 @@ class Admin extends Controller{
         parent::__construct();
         $this->view->render('admin/index');
     }
+
+    
     
 
 }
