@@ -2,33 +2,24 @@
 
 class Login extends Controller{
 
+
     function __construct(){
+
         parent::__construct();
+        $this->view->mensaje="";
+        
+    }
+
+    function render(){
         $this->view->render('login/index');
     }
 
-    function login(){
-
-        $usuario = $_POST['user'];
-        $password = $_POST['pass'];
-
-        if(isset($_POST['user']) && isset($_POST['pass'])){
-
-            $this->model->login($usuario, $password);
-
-        }
- 
-
-
-
-        
-
-
-        //echo "Welcome";
+    function ingresarUsuario(){
+        $mensaje="Usuario ingresado";
         //$this->model->insert();
+        $this->view->mensaje=$mensaje;
+        $this->render();
     }
-
-    
 }
 
 ?>
