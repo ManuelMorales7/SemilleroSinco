@@ -8,19 +8,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema m2
+-- Schema temario
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema m2
+-- Schema temario
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `m2` DEFAULT CHARACTER SET utf8mb4 ;
-USE `m2` ;
+CREATE SCHEMA IF NOT EXISTS `temario` DEFAULT CHARACTER SET utf8mb4 ;
+USE `temario` ;
 
 -- -----------------------------------------------------
--- Table `m2`.`rol`
+-- Table `temario`.`rol`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `m2`.`rol` (
+CREATE TABLE IF NOT EXISTS `temario`.`rol` (
   `idRol` INT(11) NOT NULL,
   `Administrador` BIT(1) NULL DEFAULT NULL,
   `Usuario_1` BIT(1) NULL DEFAULT NULL,
@@ -30,9 +30,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `m2`.`usuario`
+-- Table `temario`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `m2`.`usuario` (
+CREATE TABLE IF NOT EXISTS `temario`.`usuario` (
   `idUsuario` INT(11) NOT NULL,
   `Correo` VARCHAR(45) NOT NULL,
   `Contraseña` VARCHAR(45) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `m2`.`usuario` (
   INDEX `idrol_idx` (`idRol` ASC),
   CONSTRAINT `idrol`
     FOREIGN KEY (`idRol`)
-    REFERENCES `m2`.`rol` (`idRol`)
+    REFERENCES `temario`.`rol` (`idRol`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -49,9 +49,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `m2`.`auditoria`
+-- Table `temario`.`auditoria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `m2`.`auditoria` (
+CREATE TABLE IF NOT EXISTS `temario`.`auditoria` (
   `idAuditoria` INT(11) NOT NULL AUTO_INCREMENT,
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `m2`.`auditoria` (
   INDEX `idUsuario_idx` (`idUsuario` ASC),
   CONSTRAINT `idUsuario`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `m2`.`usuario` (`idUsuario`)
+    REFERENCES `temario`.`usuario` (`idUsuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -71,9 +71,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `m2`.`capitulo`
+-- Table `temario`.`capitulo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `m2`.`capitulo` (
+CREATE TABLE IF NOT EXISTS `temario`.`capitulo` (
   `idCapitulo` INT(11) NOT NULL AUTO_INCREMENT,
   `Titulo` VARCHAR(100) NOT NULL,
   `Numero_capitulo` INT(11) UNIQUE NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `m2`.`capitulo` (
   INDEX `idUsuario` (`idUsuario` ASC),
   CONSTRAINT `capitulo_ibfk_1`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `m2`.`usuario` (`idUsuario`)
+    REFERENCES `temario`.`usuario` (`idUsuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -91,9 +91,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `m2`.`permisos`
+-- Table `temario`.`permisos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `m2`.`permisos` (
+CREATE TABLE IF NOT EXISTS `temario`.`permisos` (
   `Buscar` BIT(1) NULL DEFAULT NULL,
   `Modificar` BIT(1) NULL DEFAULT NULL,
   `Eliminar` BIT(1) NULL DEFAULT NULL,
@@ -103,15 +103,15 @@ CREATE TABLE IF NOT EXISTS `m2`.`permisos` (
   INDEX `idRol` (`idRol` ASC),
   CONSTRAINT `permisos_ibfk_1`
     FOREIGN KEY (`idRol`)
-    REFERENCES `m2`.`rol` (`idRol`))
+    REFERENCES `temario`.`rol` (`idRol`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `m2`.`temario`
+-- Table `temario`.`temario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `m2`.`temario` (
+CREATE TABLE IF NOT EXISTS `temario`.`temario` (
   `Numero_subcapitulo` INT NOT NULL,
   `Titulo` VARCHAR(300) NOT NULL,
   `Numero_capitulo` INT(11) NOT NULL,
@@ -120,10 +120,10 @@ CREATE TABLE IF NOT EXISTS `m2`.`temario` (
   INDEX `idUsuario` (`idUsuario` ASC),
   CONSTRAINT `temario_ibfk_1`
     FOREIGN KEY (`Numero_capitulo`)
-    REFERENCES `m2`.`capitulo` (`idCapitulo`),
+    REFERENCES `temario`.`capitulo` (`idCapitulo`),
   CONSTRAINT `temario_ibfk_2`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `m2`.`usuario` (`idUsuario`)
+    REFERENCES `temario`.`usuario` (`idUsuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -134,15 +134,15 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 datos de Rol
 
-INSERT INTO `m2`.`rol` (`idRol`, `Administrador`, `Usuario_1`) VALUES ('1', b'1', b'0');
-INSERT INTO `m2`.`rol` (`idRol`, `Administrador`, `Usuario_1`) VALUES ('2', b'0', b'1');
+INSERT INTO `temario`.`rol` (`idRol`, `Administrador`, `Usuario_1`) VALUES ('1', b'1', b'0');
+INSERT INTO `temario`.`rol` (`idRol`, `Administrador`, `Usuario_1`) VALUES ('2', b'0', b'1');
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 usuario insecion
 
-INSERT INTO `m2`.`usuario` (`idUsuario`, `Correo`, `Contraseña`, `idRol`) VALUES ('1', 'admin@gmail.com', '  idUsuario ', '1');
-INSERT INTO `m2`.`usuario` (`idUsuario`, `Correo`, `Contraseña`, `idRol`) VALUES ('2', 'user@gmail.com', '  idUsuario ', '2');
+INSERT INTO `temario`.`usuario` (`idUsuario`, `Correo`, `Contraseña`, `idRol`) VALUES ('1', 'admin@gmail.com', '  idUsuario ', '1');
+INSERT INTO `temario`.`usuario` (`idUsuario`, `Correo`, `Contraseña`, `idRol`) VALUES ('2', 'user@gmail.com', '  idUsuario ', '2');
 
 
 
@@ -156,14 +156,14 @@ insert into permisos (buscar, modificar, eliminar, insertar, idrol) values (b'1'
 insercion de capitulos
 
 
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción a las computadoras, a Internet  y a la World Wide Web', '1', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Introducción a la programación en C', '2', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Desarrollo de programas estructurados en C', '3', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Control de programas en C', '4', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Funciones en C', '5', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Arreglos en C', '6', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Apuntadores en C', '7', '1');
-INSERT INTO `m2`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Caracteres y cadenas en C', '8', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción a las computadoras, a Internet  y a la World Wide Web', '1', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Introducción a la programación en C', '2', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Desarrollo de programas estructurados en C', '3', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Control de programas en C', '4', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Funciones en C', '5', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Arreglos en C', '6', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Apuntadores en C', '7', '1');
+INSERT INTO `temario`.`capitulo` (`idCapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Caracteres y cadenas en C', '8', '1');
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 titulos temario
@@ -171,127 +171,127 @@ titulos temario
 
 capitulo 1
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', '¿Qué es una computadora?', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Organización de computadoras', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Evolución de los sistemas operativos', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Computación personal, distribuida y cliente-servidor', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Lenguajes máquina, lenguajes ensambladores y lenguajes de alto nivel', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'FORTRAN, COBOL, Pascal y Ada', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Historia de C', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'La biblioteca estándar de C', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'C++', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Java', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'BASIC, Visual Basic, Visual C++, C# y .NET', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('13', 'La tendencia clave del software: Tecnología de objetos', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('14', 'Conceptos básicos de un ambiente típico de programación en C', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('15', 'Tendencias de hardware', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('16', 'Historia de Internet', '1', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('17', 'Historia de la World Wide Web ', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', '¿Qué es una computadora?', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Organización de computadoras', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Evolución de los sistemas operativos', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Computación personal, distribuida y cliente-servidor', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Lenguajes máquina, lenguajes ensambladores y lenguajes de alto nivel', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'FORTRAN, COBOL, Pascal y Ada', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Historia de C', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'La biblioteca estándar de C', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'C++', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Java', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'BASIC, Visual Basic, Visual C++, C# y .NET', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('13', 'La tendencia clave del software: Tecnología de objetos', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('14', 'Conceptos básicos de un ambiente típico de programación en C', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('15', 'Tendencias de hardware', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('16', 'Historia de Internet', '1', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('17', 'Historia de la World Wide Web ', '1', '1');
 
 
 
 capitulo 2
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '2', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Un programa sencillo en C: Impresión de una línea de texto', '2', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Otro programa sencillo en C: Suma de dos enteros', '2', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Conceptos de memoria', '2', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Aritmética en C', '2', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Toma de decisiones: Operadores de igualdad y de relación', '2', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '2', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Un programa sencillo en C: Impresión de una línea de texto', '2', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Otro programa sencillo en C: Suma de dos enteros', '2', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Conceptos de memoria', '2', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Aritmética en C', '2', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Toma de decisiones: Operadores de igualdad y de relación', '2', '1');
 
 
 capitulo 3
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Algoritmos', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Pseudocódigo', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Estructuras de control', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'La instrucción de selección if', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'La instrucción de selección if...else', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'La instrucción de repetición while', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Formulación de algoritmos: Ejemplo práctico 1 (repetición controlada por contador)', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Formulación de algoritmos mediante mejoramiento arriba-abajo, paso a paso: Ejemplo práctico 2 (repetición controlada por centinela)', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Formulación de algoritmos mediante mejoramiento arriba-abajo, paso a paso: Ejemplo práctico 3 (estructuras de control anidadas)', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Operadores de asignación', '3', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Operadores de incremento y decremento', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Algoritmos', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Pseudocódigo', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Estructuras de control', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'La instrucción de selección if', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'La instrucción de selección if...else', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'La instrucción de repetición while', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Formulación de algoritmos: Ejemplo práctico 1 (repetición controlada por contador)', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Formulación de algoritmos mediante mejoramiento arriba-abajo, paso a paso: Ejemplo práctico 2 (repetición controlada por centinela)', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Formulación de algoritmos mediante mejoramiento arriba-abajo, paso a paso: Ejemplo práctico 3 (estructuras de control anidadas)', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Operadores de asignación', '3', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Operadores de incremento y decremento', '3', '1');
 
 
 capitulo 4
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Fundamentos de la repetición', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Repetición controlada por contador', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Instrucción de repetición for', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Instrucción for: Notas y observaciones', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Ejemplos de la utilización de la instrucción for', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Instrucción de selección múltiple, switch', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Instrucción de repetición do…while', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Instrucciones break y continue', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Operadores lógicos', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'La confusión entre los operadores de igualdad (==)y los de asignación (=)', '4', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Resumen sobre programación estructurada', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Fundamentos de la repetición', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Repetición controlada por contador', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Instrucción de repetición for', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Instrucción for: Notas y observaciones', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Ejemplos de la utilización de la instrucción for', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Instrucción de selección múltiple, switch', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Instrucción de repetición do…while', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Instrucciones break y continue', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Operadores lógicos', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'La confusión entre los operadores de igualdad (==)y los de asignación (=)', '4', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Resumen sobre programación estructurada', '4', '1');
 
 
 capitulo 5
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Módulos de programa en C', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Funciones matemáticas de la biblioteca', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Funciones', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Definición de funciones', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Prototipos de funciones', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Encabezados', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Llamada a funciones: Llamada por valor y llamada por referencia', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Generación de números aleatorios', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Ejemplo: Un juego de azar ', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Clases de almacenamiento', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Reglas de alcance', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('13', 'Recursividad', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('14', 'Ejemplo sobre cómo utilizar la recursividad: Serie de Fibonacci', '5', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('15', 'Recursividad versus iteración', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Módulos de programa en C', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Funciones matemáticas de la biblioteca', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Funciones', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Definición de funciones', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Prototipos de funciones', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Encabezados', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Llamada a funciones: Llamada por valor y llamada por referencia', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Generación de números aleatorios', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Ejemplo: Un juego de azar ', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Clases de almacenamiento', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Reglas de alcance', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('13', 'Recursividad', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('14', 'Ejemplo sobre cómo utilizar la recursividad: Serie de Fibonacci', '5', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('15', 'Recursividad versus iteración', '5', '1');
 
 
 capitulo 6
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Arreglos', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Declaración de arreglos', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Ejemplos de arreglos', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Cómo pasar arreglos a funciones', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Ordenamiento de arreglos', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Cálculo de la media, la mediana y la moda a través de arreglos', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Búsqueda en arreglos', '6', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Arreglos con múltiples subíndices', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Arreglos', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Declaración de arreglos', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Ejemplos de arreglos', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Cómo pasar arreglos a funciones', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Ordenamiento de arreglos', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Cálculo de la media, la mediana y la moda a través de arreglos', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Búsqueda en arreglos', '6', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Arreglos con múltiples subíndices', '6', '1');
 
 
 capitulo 7
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Definición e inicialización de variables de apuntador', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Operadores para apuntadores', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Llamada a funciones por referencia', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Uso del calificador const con apuntadores', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Ordenamiento de burbuja mediante llamadas por referencia', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'El operador sizeof', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Expresiones con apuntadores y aritmética de apuntadores', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Relación entre apuntadores y arreglos', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Arreglos de apuntadores', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Ejemplo práctico: Simulación para barajar y repartir cartas', '7', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Apuntadores a funciones', '7', '1');	
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Definición e inicialización de variables de apuntador', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'Operadores para apuntadores', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Llamada a funciones por referencia', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Uso del calificador const con apuntadores', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Ordenamiento de burbuja mediante llamadas por referencia', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'El operador sizeof', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Expresiones con apuntadores y aritmética de apuntadores', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', 'Relación entre apuntadores y arreglos', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Arreglos de apuntadores', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('11', 'Ejemplo práctico: Simulación para barajar y repartir cartas', '7', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('12', 'Apuntadores a funciones', '7', '1');	
 
 capitulo 8
 
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Fundamentos de cadenas y caracteres', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'La biblioteca de manipulación de caracteres', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Funciones de conversión de cadenas', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Funciones de entrada/salida de la biblioteca estándar', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Funciones de manipulación de cadenas de la biblioteca de manipulación de cadenas', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Funciones de comparación de la biblioteca de manipulación de cadenas', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Funciones de búsqueda de la biblioteca de manipulación de cadenas', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', ' Funciones de memoria de la biblioteca de manipulación de cadenas', '8', '1');
-INSERT INTO `m2`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Otras funciones de la biblioteca de manipulación de cadenas', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('1', 'Introducción', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('2', 'Fundamentos de cadenas y caracteres', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('3', 'La biblioteca de manipulación de caracteres', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('4', 'Funciones de conversión de cadenas', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('5', 'Funciones de entrada/salida de la biblioteca estándar', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('6', 'Funciones de manipulación de cadenas de la biblioteca de manipulación de cadenas', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('7', 'Funciones de comparación de la biblioteca de manipulación de cadenas', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('8', 'Funciones de búsqueda de la biblioteca de manipulación de cadenas', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('9', ' Funciones de memoria de la biblioteca de manipulación de cadenas', '8', '1');
+INSERT INTO `temario`.`temario` (`Numero_subcapitulo`, `Titulo`, `Numero_Capitulo`, `idUsuario`) VALUES ('10', 'Otras funciones de la biblioteca de manipulación de cadenas', '8', '1');
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -424,7 +424,7 @@ delimiter ;
 eliminar capitulo
 
 DELIMITER $$
-USE `m2`$$
+USE `temario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar capitulo`(in Cap int)
 BEGIN
 declare var int;
@@ -462,7 +462,7 @@ END$$
 eliminar temario
 
 DELIMITER $$
-USE `m2`$$
+USE `temario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar temario`(in capitulo int, temario int)
 BEGIN
 declare var int;
@@ -504,7 +504,7 @@ DELIMITER ;
 procedimiento capitulo insertar
 
 DELIMITER $$
-USE `m2`$$
+USE `temario`$$
 CREATE PROCEDURE `insertar_capitulo`(in tit varchar(50), Cap int, usuario int)
 BEGIN
 declare var int;
@@ -545,7 +545,7 @@ END$$
 procedimiento insertar temario
 
 DELIMITER $$
-USE `m2`$$
+USE `temario`$$
 CREATE PROCEDURE `insertar_temario`(in tit VARCHAR(100), cap int, subcap int, usu int)
 BEGIN
 declare var int;
