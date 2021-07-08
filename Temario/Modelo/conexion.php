@@ -1,4 +1,3 @@
-
 <?php
 
 class conexion{
@@ -36,16 +35,19 @@ class conexion{
 
         $query = "select * from usuarios where usuario ='$user' and password = '$pass' ";
         $consulta = $this->conexion->query($query);
+        $row = mysqli_fetch_array($consulta);
   
-            if(mysqli_num_rows($consulta)>0){
+            if($row['id'] > 0){
                 session_start();
                 echo "admin.php";
                 return 0;
+            
             }else{
-                
-                return 1;
+
+                echo '1';
+                return 1; 
             }
-      }
+    }
 
       
   
@@ -61,7 +63,7 @@ class conexion{
 
             }else{
 
-                $this->conexion->query("insert into usuarios values('$nombre','$apellido','$usuario','$password')");
+                $this->conexion->query("insert into usuarios (nombre, apellido, usuario, password) values ('$nombre','$apellido','$usuario','$password')");
                 echo "¡Registro exitoso!";
                 return 0;
 
@@ -72,6 +74,8 @@ class conexion{
 
 
 ?>
+
+
 
 
 
