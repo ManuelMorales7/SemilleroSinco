@@ -1,80 +1,126 @@
 <?php
 class conexion{
   private $conexion;
-  private $server = "localhost";
-  private $usuario = "root";
-  private $pass = "";
-  private $db = "mydb";
-  private $user;
-  private $password;
+    private $server = "localhost";
+    private $usuario = "root";
+    private $pass = "";
+    private $db = "Temario";
+    private $username;
+    private $user_id;
+    
 
-  public function __construct(){
-    $this->conexion = new mysqli($this->server, $this->usuario, $this->pass, $this->db);
-    if ($this->conexion->connect_errno) {
-      die("Error: (".$this->conexion->connect_errno.")");
-      return 0;
-    }else{
 
-      return 1;
+  
+    public function __construct(){
+        $this->conexion = new mysqli($this->server, $this->usuario, $this->pass, $this->db);
+        
+        if ($this->conexion->connect_errno) {
+            die("Error: (".$this->conexion->connect_errno.")");
+            return 0;
+        }else{
+            return 1;
+        }
+  
     }
 
-  }
-   inicio de sesión de función pública ($usuario  , $pase){
+  
+    public function cerrar(){
+        $this->conexion->close();
+        return 1;
+    }
+  
 
-         $Query = "Select * from usuario where usuario ='$user' and password = '$pass' ";
-         $consulta =  $this->conexion->query($query);
-         $fila = mysqli_fetch_array($consulta);
+
+    public function login($user, $pass){
+
+        $this->username = $user;
+
+        $query = "select * from usuario where usuario ='$this->username' and password = '$pass' ";
+        $consulta = $this->conexion->query($query);
+        $row = mysqli_fetch_array($consulta);
   
             if($row['id_usuario'] > 0){
 
                 session_start();
-                 $_SESSION['validar'] = 1;
+                $_SESSION['validar'] = 1;
                 echo "admin.php";
-                devolver 0;
+                return 0;
             
-            }más{
+            }else{
 
-                eco '1';
-                volver 1; 
+                echo '1';
+                return 1; 
             }
     }
 
       
   
-     función pública registrar_usuario($nombre,  $apellido,  $usuario,  $contraseña){
+    public function registrar_usuario($nombre, $apellido, $usuario, $password){
   
         session_start();
-         $res =  $this->conexion->query("Select usuario from usuario where usuario = '$usuario' ");
+        $res = $this->conexion->query("select usuario from usuario where usuario = '$usuario' ");
         
-            if($res ==  $usuario){
+            if($res == $usuario){
 
-                eco '1';
-                volver 1;      
+                echo '1';
+                return 1;      
 
-            }más{
+            }else{
 
-                 $This->Conexion->Query("Insertar en usuario
- (nombre, apellido, usuario, contraseña) valores ('$nombre','$apellido','$usuario','$password')");
+                $this->conexion->query("insert into usuario 
+                (nombre, apellido, usuario, password) values ('$nombre','$apellido','$usuario','$password')");
                 echo "¡Registro exitoso!";
-                devolver 0;
+                return 0;
 
             }
     }
 
-     función pública permission_asigment($rol,  $crear,  $leer,  $actualizar,  $eliminar,  $auditoría){
+
+    public function role_creation($role, $user){
 
         session_start();
-         $Query = "Select id_rol from rol where rol = '$rol' ";
-         $id_rol =  $this->conexion->query($query);
+        $query = "select id_usuario from usuario where usuario = '$user' ";
+        $user_id = $this->conexion->query($query);
+        $row = mysqli_fetch_array($user_id);
+        $id_duplicate = implode('', $row);
+        $id = substr($id_duplicate, -1);
 
-        if(isset($id_rol)){
+        $this->user_id->$id;
+        
 
-             $this->conexion->query("insert into permisos values ('$read', '$update', '$delete', '$create', '$id_rol')");
-            echo "Asignación de permisos lista";
-            devolver 0;
+            if($row['id_usuario'] > 0){
+                $this->conexion->query("insert into rol (id_usuario, rol) values ('$id', '$role')");
+                echo "Rol creado de forma exitosa";
+                return 0;
+            }else{
+                echo '1';
+            }
+    }
 
-        }más{
-            eco '1';
+
+    public function permission_asigment($username, $create, $read, $update, $delete, $audit){
+
+        session_start();
+
+        $query = "select usuario from usuario where usurio = $username";
+        $usuario = $this->conexion->query($query);
+
+                
+        $query_join = "select r.id_rol as ROL from rol as r inner join usuario 
+        as u on u.id_usuario=r.id_usuario where u.id_usuario='$this->user_id';";
+        $rol_id = $this->conexion->query($query_join);
+        $row_join = mysqli_fetch_array($rol_id);
+        $id_duplicate_join = implode('', $row_join);
+        $id_join = substr($id_duplicate_join, -1);
+
+        if($username == $usuario){
+
+            $this->conexion->query("insert into permisos values ('$create', '$read', '$update', '$delete', '$audit', '$id_join' )");
+            echo "Asignacion de permisos lista";
+            return 0;
+
+        }else{
+            echo '1';
         }
         
 
