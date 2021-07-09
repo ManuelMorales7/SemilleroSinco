@@ -3,7 +3,7 @@
    <head>
      <meta charset="utf-8">
      
-     <title>Editar Capitulo</title>
+     <title>Editar Subcapitulos</title>
      <link rel="stylesheet" href="css/default.css">
    </head>
    <body>
@@ -12,7 +12,7 @@
        <div class="agregacion">
          <form id="formulario" action="index.html" method="post">
          <br><br>
-           <h3 class="title">Edicion de subcapitulo</h3>
+           <h3 class="title">Edicion de subcapitulos</h3>
            <br><br>
            <p style="">numero subcapitulo</p>
            <input type="text" id="numero_subcapitulo"  title="Se necesita nombre del producto" required>

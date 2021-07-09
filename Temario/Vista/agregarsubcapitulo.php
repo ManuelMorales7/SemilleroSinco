@@ -3,7 +3,7 @@
    <head>
      <meta charset="utf-8">
      
-     <title>Agregar Subcapitulo</title>
+     <title>Agregar Subcapitulos</title>
      <link rel="stylesheet" href="css/default.css">
    </head>
    <body>
@@ -12,7 +12,7 @@
        <div class="agregacion">
          <form id="formulario" action="index.html" method="post">
          <br><br>
-           <h3 class="title">Creacion de subcapitulo</h3>
+           <h3 class="title">Creacion de subcapitulos</h3>
            
            <br><br>
            <p>numero subcapitulo</p>
