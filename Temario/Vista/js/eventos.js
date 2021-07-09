@@ -73,6 +73,55 @@ $(document).ready(function(){
     });
     
 });
+
+
+
+$(document).ready(function(){
+    
+    
+    $('#submit_permission').click(function() {
+    
+        var rol = $('#rol').val();
+        var create = $('#insert_permission').val();
+        var read = $('#read_permission').val();
+        var update = $('#update_permission').val();
+        var dlete = $('#delete_permission').val();
+        var audit = $('#audit_permission').val();
+    
+            
+    
+            $.ajax({
+    
+                url : '../Controlador/permission.php',
+                method: 'POST',
+                data: {rol: rol, create: create, read: read, update: update, dlete: dlete, audit: audit},
+                    success: function(msg){
+
+                        if(msg == 1){
+
+                            $('#error_message').html('El rol ingresado no se encuentra registrado en la base de datos')
+                        
+                        }else{
+                            
+                            $('#success_message').html(msg);
+                        }
+
+
+                    
+    
+                    }
+            });   
+    
+    
+                
+    
+            
+    
+    });
+    
+});
+    
+    
     
     
     
