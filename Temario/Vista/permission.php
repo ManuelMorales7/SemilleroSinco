@@ -52,7 +52,7 @@ if($_SESSION['validar'] == 1){
 
 }else{
 
-echo "login.php";
+echo "index.php";
 
 }
 ?>
