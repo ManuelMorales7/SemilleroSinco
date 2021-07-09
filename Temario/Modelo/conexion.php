@@ -19,6 +19,94 @@ class conexion{
     }
 
   }
+   inicio de sesión de función pública ($usuario  , $pase){
+
+         $Query = "Select * from usuario where usuario ='$user' and password = '$pass' ";
+         $consulta =  $this->conexion->query($query);
+         $fila = mysqli_fetch_array($consulta);
+  
+            if($row['id_usuario'] > 0){
+
+                session_start();
+                 $_SESSION['validar'] = 1;
+                echo "admin.php";
+                devolver 0;
+            
+            }más{
+
+                eco '1';
+                volver 1; 
+            }
+    }
+
+      
+  
+     función pública registrar_usuario($nombre,  $apellido,  $usuario,  $contraseña){
+  
+        session_start();
+         $res =  $this->conexion->query("Select usuario from usuario where usuario = '$usuario' ");
+        
+            if($res ==  $usuario){
+
+                eco '1';
+                volver 1;      
+
+            }más{
+
+                 $This->Conexion->Query("Insertar en usuario
+ (nombre, apellido, usuario, contraseña) valores ('$nombre','$apellido','$usuario','$password')");
+                echo "¡Registro exitoso!";
+                devolver 0;
+
+            }
+    }
+
+     función pública permission_asigment($rol,  $crear,  $leer,  $actualizar,  $eliminar,  $auditoría){
+
+        session_start();
+         $Query = "Select id_rol from rol where rol = '$rol' ";
+         $id_rol =  $this->conexion->query($query);
+
+        if(isset($id_rol)){
+
+             $this->conexion->query("insert into permisos values ('$read', '$update', '$delete', '$create', '$id_rol')");
+            echo "Asignación de permisos lista";
+            devolver 0;
+
+        }más{
+            eco '1';
+        }
+        
+
+
+        
+    }
+    
+     función pública consultarTemario(){
+
+         $consulta =  $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.titulo as titulo from numero_capitulo as n inner join desc_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
+        mientras que ($fila = mysqli_fetch_array($consulta)) {
+    
+            echo "<tr>";
+
+                 $texto =  $fila["numero_capitulo"];
+                 $array = explotar ( '.',  $texto );    
+                 $numero_caracter = sizeof($matriz);
+                echo "Número de nivel: " . $numero_carácter . «<br/>»;
+  
+ for(  $i=1; $i<$numero_caracter;  $i++ ){
+                    echo "<td> </td>";   
+                      
+                }           
+      
+                    echo "<td>".  $fila["numero_capitulo"] . "</td>";            
+                    echo "<td>".  $fila["titulo"] . "</td>";
+       
+        
+            echo "</tr>";
+   
+        }
+    }
 
 //funcion agregar capitulo
 //http://localhost/pagina/Vista/agregarcapitulo.php
@@ -165,19 +253,10 @@ public function editarSubcapitulo($numero_subcapitulo, $titulo){
 //http://localhost/pagina/Vista/consulta.php
 public function consultarTemario(){
 
-  //$consulta = $this->conexion->query("SELECT c.numero_capitulo as numero_capitulo, t.titulo as titulo from numero_capitulo as c inner join desc_capitulo as t on c.numero_capitulo=c.numero_capitulo ORDER BY numero_capitulo");
-  //$consulta = $this->conexion->query("SELECT numero_capitulo, titulo from numero_capitulo order by numero_capitulo");
   $consulta = $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.titulo as titulo from numero_capitulo as n inner join desc_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
-  //$consulta = $this->conexion->query("SELECT c.numero_capitulo as numero_capitulo, c.titulo_capitulo as titulo_capitulo, t.titulo_subcapitulo as titulo_subcapitulo from capitulo as c inner join temario as t on t.numero_capitulo=c.numero_capitulo");
-//$consulta = $this->conexion->query("SELECT c.numero_capitulo as numero_capitulo, t.titulo as titulo from numero_capitulo as c inner join desc_capitulo as t ORDER BY c.numero_capitulo");
-  //SELECT c.id as id, c.numero_capitulo as numero_capitulo, c.padre_id as padre_id, t.id_capitulo as id_capitulo, t.titulo as titulo from numero_capitulo as c inner join desc_capitulo as t ORDER BY c.numero_capitulo
+ SELECT c.id as id, c.numero_capitulo as numero_capitulo, c.padre_id as padre_id, t.id_capitulo as id_capitulo, t.titulo as titulo from numero_capitulo as c inner join desc_capitulo as t ORDER BY c.numero_capitulo
   while ($row = mysqli_fetch_array($consulta)) {
-    //echo "<tr>";
-    //echo "<td>".$row['numero_capitulo']. "</td><td>".$row['titulo_capitulo']. "</td>". "<td>".$row['titulo_subcapitulo']. "</td>";
-    //echo "</tr>";
-
-      //echo "<li>". "Cap " . $row["numero_capitulo"] .  ".  " .  $row["titulo"] . "</li>". "<ol>". "</ol>";	
-     
+    
 
       echo "<tr>";
 
