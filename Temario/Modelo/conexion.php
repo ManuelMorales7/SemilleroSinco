@@ -136,14 +136,14 @@ public function agregarCapitulo($numero_capitulo, $titulo){
 
         session_start();
         //llama la conexion de la base de datos y crear un query para recuperar esos datos 
-        $res = $this->conexion->query("SELECT numero_capitulo, titulo from numero_capitulo where numero_capitulo = '".$numero_capitulo."' ");
+        $res = $this->conexion->query("SELECT numero_capitulo, descripcion from numero_capitulo where numero_capitulo = '".$numero_capitulo."' ");
         
 //si encontro una fila que coincide con ese query muestre el mensaje uno que esta en operaciones.js que es ya existe
         if (mysqli_num_rows($res)>0) {
           echo '1';
           //si encontro ninguna coincidencia ejecute este query muestre el mensaje 
         }else {
-          $this->conexion->query("INSERT INTO numero_capitulo (titulo, numero_capitulo) VALUES ('"  .$titulo. "','" . $numero_capitulo. "')");
+          $this->conexion->query("INSERT INTO numero_capitulo (descripcion, numero_capitulo) VALUES ('"  .$titulo. "','" . $numero_capitulo. "')");
           echo "¡Se agrego el capitulo!";
         }
 
@@ -179,7 +179,7 @@ public function editarCapitulo($numero_capitulo, $titulo){
 
 
   if (mysqli_num_rows($res)>0) {
-    $this->conexion->query("UPDATE numero_capitulo set titulo = '".$titulo."' where numero_capitulo ='".$numero_capitulo."' ");
+    $this->conexion->query("UPDATE numero_capitulo set descripcion = '".$titulo."' where numero_capitulo ='".$numero_capitulo."' ");
     echo "¡Se edito el titulo del capitulo!";
   }else {         
     echo '1';
@@ -189,7 +189,7 @@ public function editarCapitulo($numero_capitulo, $titulo){
 
 //funcion agregar subcapitulo
 //http://localhost/pagina/Vista/agregarsubcapitulo.php
-public function agregarSubcapitulo($numero_subcapitulo, $titulo, $numero_capitulo ){
+public function agregarSubcapitulo($numero_subcapitulo, $descripcion, $numero_capitulo ){
 
         session_start();
         
@@ -213,7 +213,7 @@ public function agregarSubcapitulo($numero_subcapitulo, $titulo, $numero_capitul
 
 
           $this->conexion->query("INSERT INTO numero_capitulo (numero_capitulo, padre_id) VALUES ('"  .$numero_subcapitulo. "','" . $id."')");
-          $this->conexion->query("INSERT INTO desc_capitulo ( titulo, id_capitulo) VALUES ('" . $titulo."','" .$numero_capitulo."')");
+          $this->conexion->query("INSERT INTO descripcion_capitulo ( descripcion, id_capitulo) VALUES ('" . $titulo."','" .$numero_capitulo."')");
           //INSERT INTO numero_capitulo and desc_capitulo( numero_capitulo,padre_id, titulo) 
 //SELECT o.numero_capitulo , o.padre_id , u.titulo FROM desc_capitulo u INNER JOIN numero_capitulo o ON  o.padre_id = u.id_capitulo
           echo "¡Se agrego el subcapitulo!";
@@ -275,7 +275,7 @@ public function editarSubcapitulo($numero_subcapitulo, $titulo){
 //http://localhost/pagina/Vista/consulta.php
 public function consultarTemario(){
 
-  $consulta = $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.titulo as titulo from numero_capitulo as n inner join desc_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
+  $consulta = $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.descripcion as descripcion from numero_capitulo as n inner join descripcion_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
  SELECT c.id as id, c.numero_capitulo as numero_capitulo, c.padre_id as padre_id, t.id_capitulo as id_capitulo, t.titulo as titulo from numero_capitulo as c inner join desc_capitulo as t ORDER BY c.numero_capitulo
   while ($row = mysqli_fetch_array($consulta)) {
     
