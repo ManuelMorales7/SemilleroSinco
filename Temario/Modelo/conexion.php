@@ -82,31 +82,7 @@ class conexion{
         
     }
     
-     función pública consultarTemario(){
-
-         $consulta =  $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.titulo as titulo from numero_capitulo as n inner join desc_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
-        mientras que ($fila = mysqli_fetch_array($consulta)) {
-    
-            echo "<tr>";
-
-                 $texto =  $fila["numero_capitulo"];
-                 $array = explotar ( '.',  $texto );    
-                 $numero_caracter = sizeof($matriz);
-                echo "Número de nivel: " . $numero_carácter . «<br/>»;
-  
- for(  $i=1; $i<$numero_caracter;  $i++ ){
-                    echo "<td> </td>";   
-                      
-                }           
-      
-                    echo "<td>".  $fila["numero_capitulo"] . "</td>";            
-                    echo "<td>".  $fila["titulo"] . "</td>";
-       
-        
-            echo "</tr>";
-   
-        }
-    }
+     
 
 //funcion agregar capitulo
 //http://localhost/pagina/Vista/agregarcapitulo.php
