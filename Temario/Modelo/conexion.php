@@ -33,12 +33,14 @@ class conexion{
 
     public function login($user, $pass){
 
-        $query = "select * from usuarios where usuario ='$user' and password = '$pass' ";
+        $query = "select * from usuario where usuario ='$user' and password = '$pass' ";
         $consulta = $this->conexion->query($query);
         $row = mysqli_fetch_array($consulta);
   
-            if($row['id'] > 0){
+            if($row['id_usuario'] > 0){
+
                 session_start();
+                $_SESSION['validar'] = 1;
                 echo "admin.php";
                 return 0;
             
@@ -51,29 +53,54 @@ class conexion{
 
       
   
-    function registrar_usuario($nombre, $apellido, $usuario, $password){
+    public function registrar_usuario($nombre, $apellido, $usuario, $password){
   
         session_start();
-        $res = $this->conexion->query("select nombre, usuario from usuarios where usuario = '$usuario' ");
+        $res = $this->conexion->query("select usuario from usuario where usuario = '$usuario' ");
         
-            if(mysqli_num_rows($res)>0){
+            if($res == $usuario){
 
                 echo '1';
                 return 1;      
 
             }else{
 
-                $this->conexion->query("insert into usuarios (nombre, apellido, usuario, password) values ('$nombre','$apellido','$usuario','$password')");
+                $this->conexion->query("insert into usuario 
+                (nombre, apellido, usuario, password) values ('$nombre','$apellido','$usuario','$password')");
                 echo "¡Registro exitoso!";
                 return 0;
 
             }
+    }
+
+    public function permission_asigment($rol, $create, $read, $update, $delete, $audit){
+
+        session_start();
+        $query = "select id_rol from rol where rol = '$rol' ";
+        $id_rol = $this->conexion->query($query);
+
+        if(isset($id_rol)){
+
+            $this->conexion->query("insert into permisos values ('$read', '$update', '$delete', '$create', '$id_rol')");
+            echo "Asignacion de permisos lista";
+            return 0;
+
+        }else{
+            echo '1';
+        }
+        
+
+
+        
     }
     
 }
 
 
 ?>
+
+
+
 
 
 
