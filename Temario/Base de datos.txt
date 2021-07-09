@@ -103,3 +103,79 @@ CREATE TABLE IF NOT EXISTS `temario`.`permisos` (
     REFERENCES `temario`.`rol` (`id_rol`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+
+DELIMITER //
+    CREATE TRIGGER Capitulos1
+    after insert on numero_capitulo
+    for each row 
+    BEGIN
+    insert into auditoria (fecha, hora, id_usuario, nombre_tabla, nombre_accion) 
+    values (current_date, current_time, new.id_usuario, "numero_capitulo", "Insertar");
+    end//
+    delimiter ;
+
+
+
+
+    DELIMITER //
+    CREATE TRIGGER Capitulos2
+    after update on numero_capitulo
+    for each row 
+    BEGIN
+    insert into auditoria (fecha, hora, id_usuario, nombre_tabla, nombre_accion) 
+    values (current_date, current_time, new.id_usuario, "numero_capitulo", "Modificar");
+    end//
+    delimiter ;
+
+
+
+
+
+    DELIMITER //
+    CREATE TRIGGER Capitulos3
+    after delete on numero_capitulo
+    for each row 
+    BEGIN
+    insert into auditoria (fecha, hora, id_usuario, nombre_tabla, nombre_accion) 
+    values (current_date, current_time, old.id_usuario, "numero_capitulo", "Eliminar");
+    end//
+    delimiter ;
+
+
+
+
+
+
+    DELIMITER //
+    CREATE TRIGGER descripcion
+    after insert on descripcion_capitulo
+    for each row 
+    BEGIN
+    insert into auditoria (fecha, hora, id_usuario, nombre_tabla, nombre_accion) values (current_date, current_time, new.id_usuario, "descripcion_capitulo", "Insertar");
+    end//
+    delimiter ;
+
+
+
+
+    DELIMITER //
+    CREATE TRIGGER descripcion2
+    after update on descripcion_capitulo
+    for each row 
+    BEGIN
+    insert into auditoria (fecha, hora, id_usuario, nombre_tabla, nombre_accion) values (current_date, current_time, old.id_usuario, "descripcion_capitulo", "Modificar");
+    end//
+    delimiter ;
+
+
+
+
+    DELIMITER //
+    CREATE TRIGGER descripcion3
+    after delete on descripcion_capitulo
+    for each row 
+    BEGIN
+    insert into auditoria (fecha, hora, id_usuario, nombre_tabla, nombre_accion) values (current_date, current_time, old.id_usuario, "descripcion_capitulo", "Eliminar");  
+    end//
+    delimiter ;
