@@ -1,4 +1,4 @@
-<?php
+ri<?php
 class conexion{
   private $conexion;
     private $server = "localhost";
@@ -276,7 +276,6 @@ public function editarSubcapitulo($numero_subcapitulo, $titulo){
 public function consultarTemario(){
 
   $consulta = $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.descripcion as descripcion from numero_capitulo as n inner join descripcion_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
- SELECT c.id as id, c.numero_capitulo as numero_capitulo, c.padre_id as padre_id, t.id_capitulo as id_capitulo, t.titulo as titulo from numero_capitulo as c inner join desc_capitulo as t ORDER BY c.numero_capitulo
   while ($row = mysqli_fetch_array($consulta)) {
     
 
