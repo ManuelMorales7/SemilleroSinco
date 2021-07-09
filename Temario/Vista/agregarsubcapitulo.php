@@ -8,7 +8,7 @@ if($_SESSION['validar'] == 1){
    <head>
      <meta charset="utf-8">
      
-     <title>Eliminar Capitulo</title>
+     <title>Agregar Subcapitulos</title>
      <link rel="stylesheet" href="css/default.css">
    </head>
    <body>
@@ -17,18 +17,24 @@ if($_SESSION['validar'] == 1){
        <div class="agregacion">
          <form id="formulario" action="index.html" method="post">
          <br><br>
-           <h3 class="title">Eliminacion de capitulo</h3>
+           <h3 class="title">Creacion de subcapitulos</h3>
+           
+           <br><br>
+           <p>numero subcapitulo</p>
+           <input type="text" id="numero_subcapitulo"  title="Se necesita nombre del producto" required>
+           <br><br>
+           <p>titulo subcapitulo</p>
+           <input type="text" id="titulo_subcapitulo"  title="Se necesita nombre del producto" required>
            <br><br>
            <p style="">numero capitulo</p>
            <input type="text" id="numero_capitulo"  title="Se necesita nombre del producto" required>
-           <br><br>    
            <div class="">
                <p id="mensajee" style="color: red"></p>
               <p id="mensaje" style="color: #44EC1E"></p>
 
            </div>
            <br><br><br>
-           <button type="button" name="button" id="elimina" class="uno">Eliminar capitulo</button>
+           <button type="button" name="button" id="agregar" class="uno">Agregar subcapitulo</button>
 
          </form>
 
@@ -41,7 +47,7 @@ if($_SESSION['validar'] == 1){
 
  <?php
 
-}else{
+ }else{
 
 echo "login.php";
 

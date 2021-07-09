@@ -1,8 +1,8 @@
 <?php
 session_start();
-
-
+if($_SESSION['validar'] == 1){
  ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -28,6 +28,12 @@ session_start();
   
   </body>
 </html>
+
 <?php
 
- ?>
+ }else{
+
+echo "login.php";
+
+}
+?>

@@ -1,3 +1,8 @@
+<?php
+session_start();
+if($_SESSION['validar'] == 1){
+ ?>
+
 <!DOCTYPE html>
  <html lang="en" dir="ltr">
    <head>
@@ -33,3 +38,12 @@
      <script src="js/operaciones.js" charset="utf-8"></script>
    </body>
  </html>
+
+ <?php
+
+ }else{
+
+echo "login.php";
+
+}
+?>
