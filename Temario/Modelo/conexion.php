@@ -94,6 +94,33 @@ class conexion{
         
     }
     
+    public function consultarTemario(){
+
+        $consulta = $this->conexion->query("select n.numero_capitulo as numero_capitulo, d.titulo as titulo from numero_capitulo as n inner join desc_capitulo as d on n.id=d.id_capitulo order by numero_capitulo asc");
+        while ($row = mysqli_fetch_array($consulta)) {
+    
+            echo "<tr>";
+
+                $texto = $row["numero_capitulo"];
+                $array = explode ( '.', $texto );    
+                $numero_caracter = sizeof($array);
+                //echo "Número de nivel: " . $numero_caracter . '<br/>';
+  
+                for( $i=1;$i<$numero_caracter;$i++ ){
+                    echo "<td> </td>";   
+                      
+                }           
+      
+                    echo "<td>". $row["numero_capitulo"] . "</td>";            
+                    echo "<td>". $row["titulo"] . "</td>";
+       
+        
+            echo "</tr>";
+   
+        }
+    }
+    
+    
 }
 
 
